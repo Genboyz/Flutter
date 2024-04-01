@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:xylophone/profile.dart';
-
 import 'xylo_game.dart';
 
 class FirstPage extends StatelessWidget {
@@ -10,12 +9,23 @@ class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 67, 78, 134),
+      backgroundColor: const Color.fromARGB(255, 67, 78, 134),
       body: Column(
         children: [
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.11,
+                child: const Text(
+                  "XYLOPHONE\n      GAME",
+                  style: TextStyle(
+                      color: Color.fromARGB(182, 9, 8, 26),
+                      fontSize: 35,
+                      fontFamily: 'Pacifico',
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
               Lottie.asset(
                 'assets/game.json',
                 height: MediaQuery.of(context).size.height * 0.8,
@@ -68,7 +78,7 @@ class FirstPage extends StatelessWidget {
               )
             ],
           ),
-          Container(
+          SizedBox(
             width: 55,
             child: ElevatedButton(
               onPressed: () {
