@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'question_list.dart';
 
 Listclass questionBank = Listclass();
+int score = 0;
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -33,24 +35,41 @@ class _QuizPageState extends State<QuizPage> {
   int value = 0;
   List<Icon> flags = [];
   void display(int val, bool ans) {
-    questionBank.getansw(val) == ans
-        ? flags.add(
-            const Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-          )
-        : flags.add(
-            const Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
-          );
+    if (questionBank.getansw(val) == ans) {
+      flags.add(
+        const Icon(
+          Icons.check,
+          color: Colors.green,
+        ),
+      );
+      score++;
+    } else {
+      flags.add(
+        const Icon(
+          Icons.close,
+          color: Colors.red,
+        ),
+      );
+    }
+  }
+
+  void updateState(int nextIndex) {
+    setState(() {
+      if (nextIndex == 13) {
+        Alert(
+          context: context,
+          title: 'You Scored $score/13',
+          desc: 'You\'ve reached the end of the quiz.',
+        ).show();
+        value = 0;
+        score = 0;
+        flags = [];
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    value == 13 ? value = 0 : value = value;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,9 +105,8 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 display(value, true);
-                setState(() {
-                  value++;
-                });
+                value++;
+                updateState(value);
               },
             ),
           ),
@@ -107,9 +125,8 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 display(value, false);
-                setState(() {
-                  value++;
-                });
+                value++;
+                updateState(value);
               },
             ),
           ),
