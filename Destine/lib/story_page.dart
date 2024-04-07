@@ -4,14 +4,13 @@ import 'story_brain.dart';
 StoryBrain storyBrain = StoryBrain();
 
 class StoryPage extends StatefulWidget {
-  int _listIndex;
-
-  StoryPage(this._listIndex);
+  final int _listIndex;
+  const StoryPage(this._listIndex, {super.key});
   _StoryPageState createState() => _StoryPageState(_listIndex);
 }
 
 class _StoryPageState extends State<StoryPage> {
-  int _listIndex;
+  final int _listIndex;
   _StoryPageState(this._listIndex);
 
   @override

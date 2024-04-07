@@ -42,13 +42,13 @@ class homePage extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => StoryPage(0)));
                   },
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'STICKY SITUATION',
                         style: TextStyle(
-                            color: const Color.fromARGB(187, 255, 255, 255),
+                            color: Color.fromARGB(187, 255, 255, 255),
                             fontSize: 20),
                       ),
                       Icon(Icons.navigate_next_rounded, size: 35),
@@ -68,7 +68,7 @@ class homePage extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => StoryPage(1)));
                   },
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -94,7 +94,7 @@ class homePage extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => StoryPage(2)));
                   },
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -120,7 +120,7 @@ class homePage extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => StoryPage(3)));
                   },
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
