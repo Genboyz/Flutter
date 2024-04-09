@@ -80,7 +80,7 @@ class _InputPageState extends State<InputPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: (){},
         child: Icon(Icons.add),
       ),
     );
