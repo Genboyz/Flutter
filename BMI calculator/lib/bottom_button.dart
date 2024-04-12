@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class bottomButton extends StatelessWidget {
   final void Function()? ontap;
   final String buttonTitle;
@@ -10,7 +11,7 @@ class bottomButton extends StatelessWidget {
       onTap: ontap,
       child: Container(
         child: Center(
-          child: Text("CALCULATE YOUR BMI",
+          child: Text(buttonTitle,
               style: TextStyle(
                 fontFamily: "Pacifico",
                 fontSize: 22,

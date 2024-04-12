@@ -8,4 +8,9 @@ const labelstyle = TextStyle(
   color: Color(0xFF8D8E98),
 );
 
-const fontSize = TextStyle(fontSize: 50, fontWeight: FontWeight.w900,);
+const fontSize = TextStyle(
+  fontSize: 50,
+  fontWeight: FontWeight.w900,
+);
+
+const kresultstyle = TextStyle(color: Color(0xFF24D876), fontSize: 22, fontWeight: FontWeight.bold);

@@ -1,5 +1,8 @@
-import 'package:bmi_calculator/twoCard.dart';
+import 'package:bmi_calculator/CalculatorBrain.dart';
+import 'package:bmi_calculator/results.dart';
 import 'package:flutter/material.dart';
+import 'RoundIcon.dart';
+import 'bottom_button.dart';
 import 'cardContent.dart';
 import 'constants.dart';
 import 'reusableCard.dart';
@@ -15,6 +18,7 @@ class _InputPageState extends State<InputPage> {
   Gender? SelectedGender;
   int sliderValue = 150;
   int weight = 60;
+  int age = 50;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,32 +130,100 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ResuableCard(
-                      colour: activeColor,
-                      cardcontent: TwoCards(
-                        labels: "WEIGHT",
-                      )),
+                    colour: activeColor,
+                    cardcontent: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "WEIGHT",
+                          style: labelstyle,
+                        ),
+                        Text(
+                          "${weight}",
+                          style: fontSize,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RoundIcon(
+                              onpress: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                              icon: Icons.remove,
+                            ),
+                            RoundIcon(
+                              onpress: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                              icon: Icons.add,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: ResuableCard(
-                      colour: activeColor,
-                      cardcontent: TwoCards(
-                        labels: "AGE",
-                      )),
+                    colour: activeColor,
+                    cardcontent: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'AGE',
+                          style: labelstyle,
+                        ),
+                        Text(
+                          "${age}",
+                          style: fontSize,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RoundIcon(
+                              onpress: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                              icon: Icons.remove,
+                            ),
+                            RoundIcon(
+                              onpress: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                              icon: Icons.add,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          Container(
-            child: Center(
-              child: Text("CALCULATE YOUR BMI",
-                  style: TextStyle(
-                    fontFamily: "Pacifico",
-                    fontSize: 22,
-                  )),
-            ),
-            color: Color.fromARGB(198, 235, 21, 85),
-            width: double.infinity,
-            height: 80,
+          bottomButton(
+            buttonTitle: 'CALCULATE',
+            ontap: () {
+              CalculatorBrain user =
+                  CalculatorBrain(weight: weight, height: sliderValue);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                      calculatedbmi: user.Bmicalculator(),
+                      bmicategory: user.getResult(),
+                      description: user.getDescription()),
+                ),
+              );
+            },
           ),
         ],
       ),
