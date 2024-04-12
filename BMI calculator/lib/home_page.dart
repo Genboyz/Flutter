@@ -145,6 +145,7 @@ class _InputPageState extends State<InputPage> {
             child: Center(
               child: Text("CALCULATE YOUR BMI",
                   style: TextStyle(
+                    fontFamily: "Pacifico",
                     fontSize: 22,
                   )),
             ),
