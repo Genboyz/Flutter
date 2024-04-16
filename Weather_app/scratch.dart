@@ -4,10 +4,10 @@ void main() {
   performTasks();
 }
 
-void performTasks()  {
-   task1();
-   task2();
-   task3();
+void performTasks() async {
+  task1();
+  String task2result = await task2();
+  task3(task2result);
 }
 
 void task1() {
@@ -15,12 +15,17 @@ void task1() {
   print('Task 1 complete');
 }
 
-void task2()  {
- String result = 'task 2 data';
-  print('Task 2 complete');
+Future<String> task2() async {
+  Duration seconds = const Duration(seconds: 2);
+
+  late String result;
+  await Future.delayed(seconds, () {
+    result = 'task 2 data';
+    print('Task 2 complete');
+  });
+  return result;
 }
 
-void task3() {
- String result = 'task 3 data';
+void task3(String task2result) {
   print('Task 3 complete');
 }
