@@ -25,7 +25,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.weather_app"
-    compileSdkVersion flutter.compileSdkVersion
+    //compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -59,6 +60,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
 }
 
 flutter {
