@@ -31,23 +31,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     }
   }
 
-  /*  void getLocationData() async {
-    try {
-      var weatherData = await WeatherModel().getLocationWeather();
-      WeatherModel weatherModel = WeatherModel.fromJson(weatherData);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return LocationScreen(
-            locationWeather: weatherModel,
-          );
-        }),
-      );
-    } catch (e) {
-      print("Error fetching location data: $e");
-    }
-  } */
-
   void getLocationData() async {
     WeatherModel weathermodel = WeatherModel();
     var weatherData = await weathermodel.getLocationWeather();
