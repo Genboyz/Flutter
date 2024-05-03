@@ -1,7 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'coin_data.dart';
 import 'dart:io' show Platform;
+import 'service/network.dart';
+import 'dart:math';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -9,8 +13,27 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
+  @override
   String selectedCurrency = "USD";
+  var value;
+  void initState() {
+    super.initState();
+    updateValue();
+  }
 
+  void updateValue() async {
+    var ExchangeData = await helper.getRate();
+
+    if (ExchangeData != null) {
+      setState(() {
+        String rate = ExchangeData["rate"];
+        value = rate as Int;
+        print(",+++++++++++++++++++++," + value + ",+++++++++++++++++++++");
+      });
+    }
+  }
+
+  NetworkHelp helper = NetworkHelp();
   DropdownButton<String> androidPicker() {
     List<DropdownMenuItem<String>> dropdown = [];
     for (String i in currenciesList) {
@@ -70,7 +93,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ? USD',
+                  '1 BTC = ${value ?? "?"} USD',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
