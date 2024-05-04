@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'coin_data.dart';
@@ -26,9 +24,7 @@ class _PriceScreenState extends State<PriceScreen> {
 
     if (ExchangeData != null) {
       setState(() {
-        String rate = ExchangeData["rate"];
-        value = rate as Int;
-        print(",+++++++++++++++++++++," + value + ",+++++++++++++++++++++");
+        value = (ExchangeData["rate"] as double).toStringAsFixed(0);
       });
     }
   }
