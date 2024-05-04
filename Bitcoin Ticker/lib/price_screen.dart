@@ -12,14 +12,16 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   @override
   String selectedCurrency = "USD";
+  NetworkHelp? helper;
   var value;
   void initState() {
     super.initState();
     updateValue();
+    helper = NetworkHelp(currency: selectedCurrency);
   }
 
   void updateValue() async {
-    var ExchangeData = await helper.getRate();
+    var ExchangeData = await helper?.getRate();
 
     if (ExchangeData != null) {
       setState(() {
@@ -28,7 +30,6 @@ class _PriceScreenState extends State<PriceScreen> {
     }
   }
 
-  NetworkHelp helper = NetworkHelp();
   DropdownButton<String> androidPicker() {
     List<DropdownMenuItem<String>> dropdown = [];
     for (String i in currenciesList) {
@@ -88,7 +89,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
                 child: Text(
-                  '1 BTC = ${value ?? "?"} USD',
+                  '1 BTC = ${value ?? "?"} $selectedCurrency',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.0,
