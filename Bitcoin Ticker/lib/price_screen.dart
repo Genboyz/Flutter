@@ -10,19 +10,18 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  @override
   String selectedCurrency = "USD";
   NetworkHelp? helper;
   var value;
+  @override
   void initState() {
     super.initState();
     updateValue();
-    helper = NetworkHelp(currency: selectedCurrency);
   }
 
   void updateValue() async {
+    helper = NetworkHelp(currency: selectedCurrency);
     var ExchangeData = await helper?.getRate();
-
     if (ExchangeData != null) {
       setState(() {
         value = (ExchangeData["rate"] as double).toStringAsFixed(0);
@@ -43,9 +42,8 @@ class _PriceScreenState extends State<PriceScreen> {
         value: selectedCurrency,
         items: dropdown,
         onChanged: (value) {
-          setState(() {
-            selectedCurrency = value!;
-          });
+          selectedCurrency = value!;
+          updateValue();
         });
   }
 
@@ -60,9 +58,8 @@ class _PriceScreenState extends State<PriceScreen> {
       backgroundColor: Colors.lightBlue,
       itemExtent: 32,
       onSelectedItemChanged: (selectedIndex) {
-        setState(() {
-          selectedCurrency = currenciesList[selectedIndex];
-        });
+        selectedCurrency = currenciesList[selectedIndex];
+        updateValue();
       },
       children: dropdown,
     );
