@@ -14,11 +14,7 @@ class _PriceScreenState extends State<PriceScreen> {
   List<String> coinType = ["BTC", "ETH", "LTC"];
   //List<dynamic> Values = [];
   //var emptyArray = List.generate(5, (index) => null);
-<<<<<<< HEAD
-  List<String> values = ["?", "?", "?"];
-=======
   List<String> Values = ["?", "?", "?"];
->>>>>>> fd9c7ca85ed187eecd63166e06b867f7eda81bbc
   NetworkHelp? helper;
   //var btcValue, ethValue, ltcValue;
 
@@ -30,20 +26,12 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   Future<void> updateValue() async {
-<<<<<<< HEAD
     for (int i = 0; i < coinType.length; i++) {
-=======
-    for (int i = 0; i < 3; i++) {
->>>>>>> fd9c7ca85ed187eecd63166e06b867f7eda81bbc
       helper = NetworkHelp(coin: coinType[i], currency: selectedCurrency);
       var ExchangeData = await helper?.getRate();
       if (ExchangeData != null) {
         setState(() {
-<<<<<<< HEAD
-          values[i] = (ExchangeData["rate"] as double).toStringAsFixed(0);
-=======
           Values[i] = (ExchangeData["rate"] as double).toStringAsFixed(0);
->>>>>>> fd9c7ca85ed187eecd63166e06b867f7eda81bbc
         });
       }
     }
@@ -102,7 +90,6 @@ class _PriceScreenState extends State<PriceScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-<<<<<<< HEAD
               for (int i = 0; i < coinType.length; i++)
                 Padding(
                   padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
@@ -116,7 +103,7 @@ class _PriceScreenState extends State<PriceScreen> {
                       padding: EdgeInsets.symmetric(
                           vertical: 15.0, horizontal: 28.0),
                       child: Text(
-                        '1 ${coinType[i]} = ${values[i]} $selectedCurrency',
+                        '1 ${coinType[i]} = ${Values[i]} $selectedCurrency',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20.0,
@@ -126,103 +113,6 @@ class _PriceScreenState extends State<PriceScreen> {
                     ),
                   ),
                 ),
-=======
-              Padding(
-                padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-                child: Card(
-                  color: Colors.lightBlueAccent,
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                    child: FutureBuilder<void>(
-                      future: updateValue(), // Use the created Future
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return Text(
-                            '1 BTC = ${Values[0]} $selectedCurrency',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white,
-                            ),
-                          );
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              //+++++++++++++++++++++ 3rd block ++++++++++++++++++++
-              Padding(
-                padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-                child: Card(
-                  color: Colors.lightBlueAccent,
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                    child: FutureBuilder<void>(
-                      future: updateValue(), // Use the created Future
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return Text(
-                            '1 ETH = ${Values[1]} $selectedCurrency',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white,
-                            ),
-                          );
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              //+++++++++++++++++++++ 3rd block ++++++++++++++++++++
-              Padding(
-                padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-                child: Card(
-                  color: Colors.lightBlueAccent,
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                    child: FutureBuilder<void>(
-                      future: updateValue(), // Use the created Future
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return Text(
-                            '1 LTC = ${Values[2]} $selectedCurrency',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white,
-                            ),
-                          );
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ),
->>>>>>> fd9c7ca85ed187eecd63166e06b867f7eda81bbc
             ],
           ),
           Container(
