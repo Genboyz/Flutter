@@ -11,21 +11,29 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = "USD";
+  List<String> coinType = ["BTC", "ETH", "LTC"];
+  //List<dynamic> Values = [];
+  //var emptyArray = List.generate(5, (index) => null);
+  List<String> values = ["?", "?", "?"];
   NetworkHelp? helper;
-  var value;
+  //var btcValue, ethValue, ltcValue;
+
   @override
   void initState() {
     super.initState();
+
     updateValue();
   }
 
-  void updateValue() async {
-    helper = NetworkHelp(currency: selectedCurrency);
-    var ExchangeData = await helper?.getRate();
-    if (ExchangeData != null) {
-      setState(() {
-        value = (ExchangeData["rate"] as double).toStringAsFixed(0);
-      });
+  Future<void> updateValue() async {
+    for (int i = 0; i < coinType.length; i++) {
+      helper = NetworkHelp(coin: coinType[i], currency: selectedCurrency);
+      var ExchangeData = await helper?.getRate();
+      if (ExchangeData != null) {
+        setState(() {
+          values[i] = (ExchangeData["rate"] as double).toStringAsFixed(0);
+        });
+      }
     }
   }
 
@@ -42,8 +50,10 @@ class _PriceScreenState extends State<PriceScreen> {
         value: selectedCurrency,
         items: dropdown,
         onChanged: (value) {
-          selectedCurrency = value!;
-          updateValue();
+          setState(() {
+            selectedCurrency = value!;
+            updateValue();
+          });
         });
   }
 
@@ -58,8 +68,10 @@ class _PriceScreenState extends State<PriceScreen> {
       backgroundColor: Colors.lightBlue,
       itemExtent: 32,
       onSelectedItemChanged: (selectedIndex) {
-        selectedCurrency = currenciesList[selectedIndex];
-        updateValue();
+        setState(() {
+          selectedCurrency = currenciesList[selectedIndex];
+          updateValue();
+        });
       },
       children: dropdown,
     );
@@ -75,26 +87,33 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-            child: Card(
-              color: Colors.lightBlueAccent,
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                child: Text(
-                  '1 BTC = ${value ?? "?"} $selectedCurrency',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (int i = 0; i < coinType.length; i++)
+                Padding(
+                  padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
+                  child: Card(
+                    color: Colors.lightBlueAccent,
+                    elevation: 5.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 28.0),
+                      child: Text(
+                        '1 ${coinType[i]} = ${values[i]} $selectedCurrency',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
+            ],
           ),
           Container(
             height: 150.0,
@@ -108,3 +127,120 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 }
+      /* body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
+                child: Card(
+                  color: Colors.lightBlueAccent,
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                    child: FutureBuilder<void>(
+                      future: updateValue(), // Use the created Future
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Text(
+                            '1 BTC = ${Values[0]} $selectedCurrency',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                            ),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              //+++++++++++++++++++++ 3rd block ++++++++++++++++++++
+              Padding(
+                padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
+                child: Card(
+                  color: Colors.lightBlueAccent,
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                    child: FutureBuilder<void>(
+                      future: updateValue(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Text(
+                            '1 ETH = ${Values[1]} $selectedCurrency',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                            ),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              //+++++++++++++++++++++ 3rd block ++++++++++++++++++++
+              Padding(
+                padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
+                child: Card(
+                  color: Colors.lightBlueAccent,
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                    child: FutureBuilder<void>(
+                      future: updateValue(), // Use the created Future
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Text(
+                            '1 LTC = ${Values[2]} $selectedCurrency',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                            ),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            height: 150.0,
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(bottom: 30.0),
+            color: Colors.lightBlue,
+            child: Platform.isIOS ? IOSpicker() : androidPicker(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+ */
